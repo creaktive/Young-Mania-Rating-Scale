@@ -1,0 +1,12 @@
+# Deny access to the results log file
+<Files "ymrs_results_log.jsonl">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Redirect index.php to the directory root
+RewriteEngine On
+# IMPORTANT: Change /ymrs/ to your actual subdirectory path if different, or / if in root.
+RewriteBase /ymrs/
+# Change /ymrs/ to your actual subdirectory path if different, or / if in root.
+RewriteRule ^index\.php$ /ymrs/ [R=301,L]
