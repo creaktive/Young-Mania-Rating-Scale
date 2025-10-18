@@ -165,7 +165,7 @@ if ($current_q_num <= $total_questions) {
     $current_question_data = $questions[$current_q_num];
     $question_title = $current_question_data['title'];
     $question_options = $current_question_data['options'];
-    // $question_weights is no longer needed for display
+    $question_weights = $current_question_data['weights']; // Used for displaying the score hint
 
     ?>
     <!DOCTYPE html>
@@ -204,6 +204,7 @@ if ($current_q_num <= $total_questions) {
                     <?php foreach ($question_options as $index => $option_text): ?>
                         <label>
                             <input type="radio" name="answer" value="<?php echo $index; ?>" required>
+                            (<?php echo $question_weights[$index]; ?>)
                             <?php echo $option_text; ?>
                         </label>
                     <?php endforeach; ?>
