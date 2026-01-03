@@ -2,32 +2,11 @@
 session_start();
 
 $total_score = 0;
-$answers_to_log = [];
-
 if (isset($_SESSION['answers'])) {
     foreach ($_SESSION['answers'] as $q_num => $score) {
         $total_score += $score;
-        $answers_to_log["Q{$q_num}"] = $score; // Prepare for JSON: Q1, Q2, etc.
     }
 }
-
-// --- New functionality: Log results to a file ---
-$log_file = 'ymrs_results_log.jsonl'; // .jsonl for JSON Lines format
-$timestamp = date('Y-m-d H:i:s'); // Get current timestamp
-
-$log_entry = [
-    'timestamp' => $timestamp,
-    'total_score' => $total_score,
-    'answers' => $answers_to_log
-];
-
-// Encode the entry as a single JSON line
-$json_log_entry = json_encode($log_entry);
-
-// Append the JSON line to the log file, followed by a newline
-// Using FILE_APPEND and LOCK_EX for safe concurrent writes
-file_put_contents($log_file, $json_log_entry . PHP_EOL, FILE_APPEND | LOCK_EX);
-// --- End new functionality ---
 
 // Clear the session after displaying results
 session_unset();
